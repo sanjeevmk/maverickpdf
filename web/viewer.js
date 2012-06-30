@@ -3,7 +3,8 @@
 
 'use strict';
 
-var kDefaultURL = 'compressed.tracemonkey-pldi-09.pdf';
+//var kDefaultURL = 'compressed.tracemonkey-pldi-09.pdf';
+var kDefaultURL = 'second.pdf';
 var kDefaultScale = 'auto';
 var kDefaultScaleDelta = 1.1;
 var kUnknownScale = 0;
@@ -16,6 +17,64 @@ var kImageDirectory = './images/';
 var kSettingsMemory = 20;
 
 var mozL10n = document.mozL10n || document.webL10n;
+
+$(document).ready(function() {
+
+	var dictionary = [ ["generic","general,refers to"] , ["extensible","capable of being extended"] ,
+				["embedded","to fix into a surrounding mass"] , ["modular","of or pertaining to a module"], 
+				["methodology","a set or system of methods"] , 
+				["integration","an act or instance of combining into an integral  whole."] , 
+				["fundamental","being an essential part of"]
+				];
+
+	function isInDictionary(word)
+	{
+		var is=true;
+		var i,j;
+                for(i=0;i<7;i++)
+                {
+                        for(j=0;j<7;j++)
+                        {
+                                if(dictionary[i][j] == word)
+                                        return is;
+                        }
+                }
+
+		is=false;
+		return is;
+	}
+
+	function meaning(word)
+	{
+		var i,j;
+		for(i=0;i<7;i++)
+		{
+			for(j=0;j<7;j++)
+			{
+				if(dictionary[i][j] == word)
+					return dictionary[i][j+1];
+			}
+		}			
+	}	
+
+	$('#mainContainer').click( function() {
+		$('#bottomtext').text("");
+		$('#bottomtext').css( {"display":"none"} );
+		$('#mainContainer').css( {"height":"100%"} );
+	});
+
+	$('#mainContainer').mouseover( function() {
+			var selObj = window.getSelection();
+			var textsel = selObj.toString();
+			if(isInDictionary(textsel))
+			{
+				$('#mainContainer').css( {"height":"85%"} );
+				$('#bottomtext').css( {"display":"block"} );
+				$('#bottomtext').text( meaning(textsel) );
+				
+			}
+		});
+} );
 
 function getFileName(url) {
   var anchor = url.indexOf('#');

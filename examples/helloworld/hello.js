@@ -10,7 +10,7 @@
 //
 // Fetch the PDF document from the URL using promices
 //
-PDFJS.getDocument('helloworld.pdf').then(function(pdf) {
+PDFJS.getDocument('http://sanjeevmk.in/maxpayne/hello.pdf').then(function(pdf) {
   // Using promise to fetch the page
   pdf.getPage(1).then(function(page) {
     var scale = 1.5;
